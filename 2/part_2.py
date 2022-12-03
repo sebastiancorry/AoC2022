@@ -16,6 +16,7 @@ def search_2D(L, n):
     for i, x in enumerate(L):
         if n in x:
             return i
+    return -1
 
 # Conver the input of Lose/Draw/Win to the inputs used in part 1.
 def convert_input_to_move(home_input, opp_move, key):
