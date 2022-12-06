@@ -41,7 +41,6 @@ with open("input.txt", "r") as file:
     for i in instructions:
         m_crates = crates[i[1]-1][:i[0]]
         print(m_crates)
-        m_crates.reverse()
         print(m_crates)
         crates[i[2]-1] = [*m_crates, *crates[i[2]-1]]
         print("BEFORE")
