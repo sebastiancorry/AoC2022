@@ -1,5 +1,5 @@
 def find_marker(dstream, num_c):
-    for i in range(len(dstream) + num_c):
+    for i in range(len(dstream) - num_c):
         if len(set(dstream[i:i+num_c])) == num_c:
             return (i + num_c)
 
