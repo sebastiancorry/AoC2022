@@ -1,60 +1,27 @@
-# with open("test.txt", "r") as file:
-#     signal_checks = [20, 60, 100, 140, 180, 220]
-#     crt = [[]]*6
-# 
-#     r_X = 1
-#     cycle = 1
-#     sum_ = 0
-# 
-#     incr = 0
-#     next_inst = 0
-# 
-#     for cycle in range(240):
-#         c_row = cycle // 40
-#         c_row -= 1 if c_row > 0 else 0
-# 
-#         r_X += incr
-#         incr = 0
-# 
-#         if next_inst == 0:
-#             inst = file.readline()
-#             if inst.strip().replace("\n", "") != "noop":
-#                 next_inst = 2
-#                 incr = int(inst.replace("\n", "").split(" ")[1])
-# 
-#         next_inst -= 1
-# 
-#         if cycle - ((c_row-1) * 40) == r_X:
-#             crt[c_row].append("#")
-#         else:
-#             crt[c_row].append(".")
-# 
-#     for i in crt:
-#         print("".join(i))
+import textwrap as tw
 
-
-with open("test.txt", "r") as file:
-    crt = ["."]*240
+with open("input.txt", "r") as file:
+    crt = []
     r_X = 1
-    x = 0
-    n_inst_on = 1
+    next_i = 1
+    instruction = (1, 0)
+    for c in range(1, 241):
+        if c == instruction[0]:
+            r_X += instruction[1]
 
-    for i in range(240):
-        cycle = i + 1
-
-        if n_inst_on == cycle:
-            r_X += x
-            inst = file.readline()
-            if not "noop" in inst:
-                x = int(inst.replace("\n", "").split(" ")[1])
-                n_inst_on = cycle + 2
+            line = file.readline().replace("\n", "")
+            if "addx" in line:
+                n = 2
+                V = int(line.split(" ")[1])
+                instruction = (c + n, V)
             else:
-                x = 0
-                n_inst_on = cycle + 1
+                instruction = (c + 1, 0)
 
+        sprite = [r_X-1, r_X, r_X+1]
+        if (c % 40) - 1 in sprite:
+            crt.append("█")
+        else:
+            crt.append(".")
 
-            if i == r_X or i - 1 == r_X or i + 1 == r_X:
-                crt[i] = "#"
+    print(tw.fill("".join(crt), 40))
 
-    for i in range(6):
-        print("".join(crt[i*40:(i+1)*40]))
